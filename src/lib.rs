@@ -1,3 +1,4 @@
+use thiserror::Error;
 use url::{ParseError, Url};
 
 #[non_exhaustive]
@@ -20,14 +21,21 @@ struct DigitalLink {
 	data_attributes: DataAttributes,
 }
 
+#[derive(Error, Debug)]
 enum Error {
-	ParseError(ParseError),
+	#[error("url parsing failed: {0}")]
+	ParseError(#[from] ParseError),
+	#[error("validation failed: {0}")]
 	ValidationError(ValidationError),
 }
 
+#[derive(Error, Debug)]
 enum ValidationError {
+	#[error("can't find primary identification key")]
 	PrimaryIdentificationKeyNotFound,
+	#[error("can't find primary identification key value")]
 	PrimaryIdentificationKeyValueNotFound,
+	#[error("primary identification key is invalid")]
 	InvalidPrimaryIdentificationKey,
 }
 
