@@ -10,7 +10,7 @@ enum Gs1Path {
 
 #[non_exhaustive]
 struct DataAttributes {
-	net_weight_vmti: String,
+	net_weight_vmti: Option<String>,
 }
 
 struct DigitalLink {
