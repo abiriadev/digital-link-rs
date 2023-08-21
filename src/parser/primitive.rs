@@ -44,17 +44,32 @@ mod tests {
 	use super::*;
 
 	#[test]
-	fn colon_should_be_xsymbol() {
-		assert_eq!(xchar(":"), Ok(("", ":")));
+	fn colon_should_not_be_xchar() {
+		assert_debug_snapshot!(xchar(":"));
 	}
 
 	#[test]
-	fn x_should_be_xsymbol() {
+	fn escaped_colon_should_be_xchar() {
+		assert_eq!(xchar("%3A"), Ok(("", "%3A")));
+	}
+
+	#[test]
+	fn question_mark_should_not_be_xchar() {
+		assert_debug_snapshot!(xchar("?"));
+	}
+
+	#[test]
+	fn escaped_question_mark_should_be_xchar() {
+		assert_eq!(xchar("%3F"), Ok(("", "%3F")));
+	}
+
+	#[test]
+	fn x_should_be_xchar() {
 		assert_eq!(xchar("x"), Ok(("", "x")));
 	}
 
 	#[test]
-	fn hash_should_not_be_xsymbol() {
+	fn hash_should_not_be_xchar() {
 		assert_debug_snapshot!(xchar("#"));
 	}
 }
