@@ -1,7 +1,8 @@
+use insta::{assert_debug_snapshot, assert_yaml_snapshot};
 use nom::{
 	character::complete::one_of,
 	error::{Error, ErrorKind, ParseError},
-	IResult,
+	Err, IResult,
 };
 
 fn xchar(i: &str) -> IResult<&str, char> {
@@ -22,11 +23,5 @@ fn x_should_be_xsymbol() {
 
 #[test]
 fn hash_should_not_be_xsymbol() {
-	assert_eq!(
-		xchar("#"),
-		Err(nom::Err::Error(Error::from_error_kind(
-			"#",
-			ErrorKind::OneOf
-		)))
-	);
+	assert_debug_snapshot!(xchar("#"));
 }
