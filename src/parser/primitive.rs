@@ -37,6 +37,15 @@ pub fn xchar(i: &str) -> IResult<&str, &str> {
 	))(i)
 }
 
+pub fn ychar(i: &str) -> IResult<&str, &str> {
+	alt((
+		recognize(alphanumeric),
+		tag("-"),
+		tag("%23"),
+		tag("%2F"),
+	))(i)
+}
+
 #[cfg(test)]
 mod tests {
 	use insta::assert_debug_snapshot;
