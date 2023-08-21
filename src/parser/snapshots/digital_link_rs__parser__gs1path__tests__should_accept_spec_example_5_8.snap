@@ -1,0 +1,12 @@
+---
+source: src/parser/gs1path.rs
+expression: "gs1path(\"/00/195201234567891232\")"
+---
+Ok(
+    (
+        "",
+        Sscc(
+            "195201234567891232",
+        ),
+    ),
+)

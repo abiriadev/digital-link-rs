@@ -1,0 +1,15 @@
+---
+source: src/parser/gs1path.rs
+expression: "gs1path(\"/01/09520123456788?3103=000195\")"
+---
+Ok(
+    (
+        "?3103=000195",
+        Gtin {
+            gtin: "09520123456788",
+            cpv: None,
+            lot: None,
+            ser: None,
+        },
+    ),
+)

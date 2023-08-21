@@ -1,0 +1,12 @@
+---
+source: src/parser/gs1path.rs
+expression: "gs1path(\"/\")"
+---
+Err(
+    Error(
+        Error {
+            input: "",
+            code: Tag,
+        },
+    ),
+)

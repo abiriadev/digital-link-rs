@@ -1,0 +1,12 @@
+---
+source: src/parser/primitive.rs
+expression: "ychar(\"%3F\")"
+---
+Err(
+    Error(
+        Error {
+            input: "%3F",
+            code: Tag,
+        },
+    ),
+)

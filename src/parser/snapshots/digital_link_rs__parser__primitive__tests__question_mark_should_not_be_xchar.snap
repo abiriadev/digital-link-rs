@@ -1,0 +1,12 @@
+---
+source: src/parser/primitive.rs
+expression: "xchar(\"?\")"
+---
+Err(
+    Error(
+        Error {
+            input: "?",
+            code: Tag,
+        },
+    ),
+)

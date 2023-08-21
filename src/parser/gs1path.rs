@@ -76,3 +76,80 @@ pub fn gs1path(i: &str) -> IResult<&str, Gs1Path> {
 		}),
 	))(i)
 }
+
+#[cfg(test)]
+mod tests {
+	use insta::assert_debug_snapshot;
+
+	use super::*;
+
+	#[test]
+	fn should_not_accept_root_path() {
+		assert_debug_snapshot!(gs1path("/"));
+	}
+
+	#[test]
+	fn should_accept_spec_example_5_1() {
+		assert_debug_snapshot!(gs1path("/01/09520123456788"));
+	}
+
+	#[test]
+	fn should_accept_spec_example_5_2() {
+		assert_debug_snapshot!(gs1path("/01/09520123456788/22/2A"));
+	}
+
+	#[test]
+	fn should_accept_spec_example_5_3() {
+		assert_debug_snapshot!(gs1path("/01/09520123456788/10/ABC123"));
+	}
+
+	#[test]
+	fn should_accept_spec_example_5_4() {
+		assert_debug_snapshot!(gs1path("/01/09520123456788/21/12345"));
+	}
+
+	#[test]
+	fn should_accept_spec_example_5_5() {
+		assert_debug_snapshot!(gs1path(
+			"/01/09520123456788/10/ABC1/21/12345?17=180426"
+		));
+	}
+
+	#[test]
+	fn should_accept_spec_example_5_6() {
+		assert_debug_snapshot!(gs1path(
+			"/01/09520123456788?3103=000195"
+		));
+	}
+
+	#[test]
+	fn should_accept_spec_example_5_7() {
+		assert_debug_snapshot!(gs1path(
+			"/01/09520123456788?3103=000195&3922=0299&17=201225"
+		));
+	}
+
+	#[test]
+	fn should_accept_spec_example_5_8() {
+		assert_debug_snapshot!(gs1path("/00/195201234567891232"));
+	}
+
+	#[test]
+	fn should_accept_spec_example_5_9() {
+		assert_debug_snapshot!(gs1path(
+			"/00/195201234567891232?02=09520123456788&37=25&10=ABC12"
+		));
+	}
+
+	#[test]
+	fn should_accept_spec_example_5_10() {
+		assert_debug_snapshot!(gs1path("/414/9520123456788"));
+	}
+
+	#[test]
+	fn should_accept_spec_example_5_11() {
+		assert_debug_snapshot!(gs1path(
+			"/8004/9520614141234567?01=09520123456788"
+		));
+	}
+}

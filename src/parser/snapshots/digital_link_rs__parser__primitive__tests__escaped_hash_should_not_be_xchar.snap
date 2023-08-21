@@ -1,0 +1,12 @@
+---
+source: src/parser/primitive.rs
+expression: "xchar(\"%23\")"
+---
+Err(
+    Error(
+        Error {
+            input: "%23",
+            code: Tag,
+        },
+    ),
+)

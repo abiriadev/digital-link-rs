@@ -1,0 +1,12 @@
+---
+source: src/parser/primitive.rs
+expression: "ychar(\"#\")"
+---
+Err(
+    Error(
+        Error {
+            input: "#",
+            code: Tag,
+        },
+    ),
+)

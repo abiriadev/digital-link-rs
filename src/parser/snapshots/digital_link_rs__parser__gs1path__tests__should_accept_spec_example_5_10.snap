@@ -1,0 +1,13 @@
+---
+source: src/parser/gs1path.rs
+expression: "gs1path(\"/414/9520123456788\")"
+---
+Ok(
+    (
+        "",
+        Gln {
+            gln: "9520123456788",
+            glnx: None,
+        },
+    ),
+)
