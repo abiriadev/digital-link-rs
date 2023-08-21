@@ -9,7 +9,7 @@ pub struct DigitalLink {
 }
 
 impl DigitalLink {
-	fn try_from_str(s: &str) -> Result<Self, Error> {
+	pub fn try_from_str(s: &str) -> Result<Self, Error> {
 		let url = Url::parse(s);
 
 		let Ok(url) = Url::parse(s) else { return Err(Error::UrlParseError(url.unwrap_err())); };
