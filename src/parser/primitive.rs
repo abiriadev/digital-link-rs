@@ -2,12 +2,16 @@ use nom::{branch::alt, character::complete::one_of, IResult};
 
 pub fn digit(i: &str) -> IResult<&str, char> { one_of("0123456789")(i) }
 
+pub fn alpha(i: &str) -> IResult<&str, char> {
+	one_of("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")(i)
+}
+
+pub fn alphanumeric(i: &str) -> IResult<&str, char> { alt((digit, alpha))(i) }
+
 pub fn xchar(i: &str) -> IResult<&str, char> {
 	alt((
-		digit,
-		one_of(
-			r#"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"-._!%&+./*[]';:<>=?"#,
-		),
+		alphanumeric,
+		one_of(r#""-._!%&+./*[]';:<>=?"#),
 	))(i)
 }
 
