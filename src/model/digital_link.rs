@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use nom::combinator::all_consuming;
 use url::Url;
 
@@ -35,4 +37,15 @@ impl DigitalLink {
 #[non_exhaustive]
 pub struct DataAttributes {
 	net_weight_vmti: Option<String>,
+}
+
+impl Display for DigitalLink {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		write!(
+			f,
+			"http://{}/{}",
+			self.base_url,
+			self.gs1_path.to_string()
+		)
+	}
 }
