@@ -12,7 +12,7 @@ use super::{
 	},
 	qualifier::{cpsn, cpv, glnx, lot, ser, srin, tpx, uic_ext},
 };
-use crate::Gs1Path;
+use crate::model::Gs1Path;
 
 fn gs1path(i: &str) -> IResult<&str, Gs1Path> {
 	alt((
