@@ -112,7 +112,7 @@ impl DigitalLink {
 			))?;
 
 		let gs1_path = match primary_id {
-			"01" => Gs1Path::GtinPath {
+			"01" => Gs1Path::Gtin {
 				gtin: primary_id_value.to_owned(),
 				cpv: None,
 				lot: None,
