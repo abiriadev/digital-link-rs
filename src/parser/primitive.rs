@@ -1,11 +1,14 @@
-use nom::{character::complete::one_of, IResult};
+use nom::{branch::alt, character::complete::one_of, IResult};
 
 pub fn digit(i: &str) -> IResult<&str, char> { one_of("0123456789")(i) }
 
 pub fn xchar(i: &str) -> IResult<&str, char> {
-	one_of(
-		r#"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"-._!%&+./*[]';:<>=?"#,
-	)(i)
+	alt((
+		digit,
+		one_of(
+			r#"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"-._!%&+./*[]';:<>=?"#,
+		),
+	))(i)
 }
 
 #[cfg(test)]
