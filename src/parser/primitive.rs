@@ -84,6 +84,11 @@ mod tests {
 	}
 
 	#[test]
+	fn escaped_question_mark_should_be_ychar() {
+		assert_debug_snapshot!(ychar("%3F"));
+	}
+
+	#[test]
 	fn x_should_be_xchar() {
 		assert_eq!(xchar("x"), Ok(("", "x")));
 	}
@@ -91,5 +96,20 @@ mod tests {
 	#[test]
 	fn hash_should_not_be_xchar() {
 		assert_debug_snapshot!(xchar("#"));
+	}
+
+	#[test]
+	fn escaped_hash_should_not_be_xchar() {
+		assert_debug_snapshot!(xchar("%23"));
+	}
+
+	#[test]
+	fn hash_should_not_be_ychar() {
+		assert_debug_snapshot!(ychar("#"));
+	}
+
+	#[test]
+	fn escaped_hash_should_not_be_ychar() {
+		assert_eq!(ychar("%23"), Ok(("", "%23")));
 	}
 }
