@@ -43,9 +43,24 @@ impl Display for DigitalLink {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		write!(
 			f,
-			"http://{}/{}",
+			"http://{}{}",
 			self.base_url,
 			self.gs1_path.to_string()
 		)
+	}
+}
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	fn serialized_result_should_be_same_as_input() {
+		let url =
+			"http://digital-link.aipim.io/01/09520123456788/10/ABC1/21/12345";
+
+		let dl = DigitalLink::try_from_str(url).unwrap();
+
+		assert_eq!(url, dl.to_string());
 	}
 }
