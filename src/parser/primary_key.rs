@@ -1,5 +1,4 @@
 use nom::{
-	combinator::recognize,
 	multi::{count, many_m_n},
 	sequence::pair,
 };
@@ -17,7 +16,7 @@ comp! { gsrnp,	"8017",	count(digit, 18) }
 comp! { gsrn,	"8018",	count(digit, 18) }
 comp! { gcn,	"255",	many_m_n(13, 25, digit) }
 comp! { sscc,	"00",	count(digit, 18) }
-comp! { gdti,	"253",	recognize(pair(count(digit, 13), many_m_n(1, 17, xchar))) }
+comp! { gdti,	"253",	pair(count(digit, 13), many_m_n(1, 17, xchar)) }
 comp! { ginc,	"401",	many_m_n(1, 30, xchar) }
 comp! { gsin,	"402",	count(digit, 17) }
 comp! { grai,	"8003",	many_m_n(14, 30, xchar) }

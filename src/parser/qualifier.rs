@@ -1,5 +1,4 @@
 use nom::{
-	combinator::recognize,
 	multi::{count, many_m_n},
 	sequence::pair,
 };
@@ -14,4 +13,4 @@ comp! { glnx,   "254",  many_m_n(1, 20, xchar) }
 comp! { refno,  "8020", many_m_n(1, 25, xchar) }
 comp! { srin,   "8019", many_m_n(1, 10, digit) }
 comp! { tpx,    "235",  many_m_n(1, 28, xchar) }
-comp! { uic_ext,    "7040", recognize(pair(digit, count(xchar, 3))) }
+comp! { uic_ext,    "7040", pair(digit, count(xchar, 3)) }
