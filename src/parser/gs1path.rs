@@ -14,7 +14,7 @@ use super::{
 };
 use crate::model::Gs1Path;
 
-fn gs1path(i: &str) -> IResult<&str, Gs1Path> {
+pub fn gs1path(i: &str) -> IResult<&str, Gs1Path> {
 	alt((
 		tuple((gtin, opt(cpv), opt(lot), opt(ser))).map(
 			|(gtin, cpv, lot, ser)| Gs1Path::Gtin {

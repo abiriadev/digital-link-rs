@@ -1,6 +1,9 @@
 pub use gs1path::Gs1Path;
+use nom::combinator::all_consuming;
 use thiserror::Error;
 use url::{ParseError, Url};
+
+use crate::parser::gs1path;
 
 mod gs1path;
 
@@ -17,60 +20,29 @@ pub struct DigitalLink {
 #[derive(Error, Debug)]
 pub enum Error {
 	#[error("url parsing failed: {0}")]
-	ParseError(#[from] ParseError),
-	#[error("validation failed: {0}")]
-	ValidationError(ValidationError),
-}
-
-#[derive(Error, Debug)]
-pub enum ValidationError {
-	#[error("can't find primary identification key")]
-	PrimaryIdentificationKeyNotFound,
-	#[error("can't find primary identification key value")]
-	PrimaryIdentificationKeyValueNotFound,
-	#[error("primary identification key is invalid")]
-	InvalidPrimaryIdentificationKey,
+	UrlParseError(#[from] ParseError),
+	#[error("gs1 path parsing failed: {0}")]
+	Gs1PathParseError(#[from] nom::Err<String>),
 }
 
 impl DigitalLink {
 	fn try_from_str(s: &str) -> Result<Self, Error> {
 		let url = Url::parse(s);
 
-		let Ok(url) = url else { return Err(Error::ParseError(url.unwrap_err())); };
+		let Ok(url) = Url::parse(s) else { return Err(Error::UrlParseError(url.unwrap_err())); };
 
-		let mut seg_it = url
-			.path_segments()
-			.ok_or(Error::ValidationError(
-				ValidationError::PrimaryIdentificationKeyNotFound,
-			))?;
+		let res = all_consuming(gs1path)(url.path());
 
-		let primary_id = seg_it
-			.next()
-			.ok_or(Error::ValidationError(
-				ValidationError::PrimaryIdentificationKeyNotFound,
-			))?;
-
-		let primary_id_value = seg_it
-			.next()
-			.ok_or(Error::ValidationError(
-				ValidationError::PrimaryIdentificationKeyValueNotFound,
-			))?;
-
-		let gs1_path = match primary_id {
-			"01" => Gs1Path::Gtin {
-				gtin: primary_id_value.to_owned(),
-				cpv: None,
-				lot: None,
-				ser: None,
-			},
-			_ => unimplemented!(),
-		};
-
-		Ok(Self {
-			gs1_path,
-			data_attributes: DataAttributes {
-				net_weight_vmti: None,
-			},
-		})
+		match res {
+			Ok((_, gs1_path)) => Ok(Self {
+				gs1_path,
+				data_attributes: DataAttributes {
+					net_weight_vmti: None,
+				},
+			}),
+			Err(err) => Err(Error::Gs1PathParseError(
+				err.map(|e| e.to_string()),
+			)),
+		}
 	}
 }
