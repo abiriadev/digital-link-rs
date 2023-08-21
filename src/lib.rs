@@ -1,3 +1,5 @@
+mod parser;
+
 use thiserror::Error;
 use url::{ParseError, Url};
 
