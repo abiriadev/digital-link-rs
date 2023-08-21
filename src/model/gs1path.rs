@@ -1,4 +1,5 @@
 #[non_exhaustive]
+#[derive(Debug)]
 pub enum Gs1Path {
 	Gtin {
 		gtin: String,
