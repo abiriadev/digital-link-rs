@@ -1,5 +1,3 @@
-#![allow(unused)]
-
 use nom::{
 	combinator::recognize,
 	multi::{count, many_m_n},
