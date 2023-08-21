@@ -1,7 +1,7 @@
 use nom::combinator::all_consuming;
 use url::Url;
 
-use super::{gs1path, DataAttributes, Error, Gs1Path};
+use super::{error::Error, gs1path, Gs1Path};
 
 pub struct DigitalLink {
 	gs1_path: Gs1Path,
@@ -28,4 +28,9 @@ impl DigitalLink {
 			)),
 		}
 	}
+}
+
+#[non_exhaustive]
+pub struct DataAttributes {
+	net_weight_vmti: Option<String>,
 }
