@@ -1,8 +1,10 @@
 use nom::{character::complete::one_of, IResult};
 
+fn digit(i: &str) -> IResult<&str, char> { one_of("0123456789")(i) }
+
 fn xchar(i: &str) -> IResult<&str, char> {
 	one_of(
-		r#"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"-._!%&+./*[]';:<>=?"#,
+		r#"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"-._!%&+./*[]';:<>=?"#,
 	)(i)
 }
 
