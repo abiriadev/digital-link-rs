@@ -3,17 +3,27 @@ use nom::{
 	combinator::recognize, IResult,
 };
 
-pub fn digit(i: &str) -> IResult<&str, char> { one_of("0123456789")(i) }
-
-pub fn alpha(i: &str) -> IResult<&str, char> {
-	one_of("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")(i)
+pub fn digit(i: &str) -> IResult<&str, &str> {
+	recognize(one_of("0123456789"))(i)
 }
 
-pub fn alphanumeric(i: &str) -> IResult<&str, char> { alt((digit, alpha))(i) }
+pub fn upper_alpha(i: &str) -> IResult<&str, &str> {
+	recognize(one_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ"))(i)
+}
+
+pub fn lower_alpha(i: &str) -> IResult<&str, &str> {
+	recognize(one_of("abcdefghijklmnopqrstuvwxyz"))(i)
+}
+
+pub fn alpha(i: &str) -> IResult<&str, &str> {
+	alt((upper_alpha, lower_alpha))(i)
+}
+
+pub fn alphanumeric(i: &str) -> IResult<&str, &str> { alt((digit, alpha))(i) }
 
 pub fn xchar(i: &str) -> IResult<&str, &str> {
 	alt((
-		recognize(alphanumeric),
+		alphanumeric,
 		tag(r#"""#),
 		tag("-"),
 		tag("."),
@@ -39,7 +49,7 @@ pub fn xchar(i: &str) -> IResult<&str, &str> {
 
 pub fn ychar(i: &str) -> IResult<&str, &str> {
 	alt((
-		recognize(alphanumeric),
+		alphanumeric,
 		tag("-"),
 		tag("%23"),
 		tag("%2F"),
