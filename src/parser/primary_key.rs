@@ -1,25 +1,12 @@
 #![allow(unused)]
 
 use nom::{
-	bytes::complete::tag,
-	combinator::{opt, recognize},
+	combinator::recognize,
 	multi::{count, many_m_n},
-	sequence::{pair, preceded},
-	IResult,
+	sequence::pair,
 };
 
 use super::primitive::{digit, xchar};
-
-macro_rules! comp {
-	($name:ident, $code:literal, $value:expr) => {
-		fn $name(i: &str) -> IResult<&str, &str> {
-			recognize(pair(
-				preceded(tag("/"), tag($code)),
-				preceded(tag("/"), $value),
-			))(i)
-		}
-	};
-}
 
 comp! { gtin,	"01",	count(digit, 14) }
 comp! { itip,	"8006",	count(digit, 18) }
