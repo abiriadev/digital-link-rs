@@ -6,6 +6,7 @@ use super::{error::Error, gs1path, Gs1Path};
 pub struct DigitalLink {
 	gs1_path: Gs1Path,
 	data_attributes: DataAttributes,
+	base_url: String,
 }
 
 impl DigitalLink {
@@ -22,6 +23,7 @@ impl DigitalLink {
 				data_attributes: DataAttributes {
 					net_weight_vmti: None,
 				},
+				base_url: url.host_str().unwrap().to_owned(),
 			}),
 			Err(err) => Err(Error::Gs1PathParseError(
 				err.map(|e| e.to_string()),
