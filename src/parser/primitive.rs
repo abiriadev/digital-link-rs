@@ -49,7 +49,8 @@ pub fn xchar(i: &str) -> IResult<&str, &str> {
 
 pub fn ychar(i: &str) -> IResult<&str, &str> {
 	alt((
-		alphanumeric,
+		digit,
+		upper_alpha,
 		tag("-"),
 		tag("%23"),
 		tag("%2F"),
