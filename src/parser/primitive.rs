@@ -1,4 +1,7 @@
-use nom::{branch::alt, character::complete::one_of, IResult};
+use nom::{
+	branch::alt, bytes::complete::tag, character::complete::one_of,
+	combinator::recognize, IResult,
+};
 
 pub fn digit(i: &str) -> IResult<&str, char> { one_of("0123456789")(i) }
 
@@ -8,10 +11,29 @@ pub fn alpha(i: &str) -> IResult<&str, char> {
 
 pub fn alphanumeric(i: &str) -> IResult<&str, char> { alt((digit, alpha))(i) }
 
-pub fn xchar(i: &str) -> IResult<&str, char> {
+pub fn xchar(i: &str) -> IResult<&str, &str> {
 	alt((
-		alphanumeric,
-		one_of(r#""-._!%&+./*[]';:<>=?"#),
+		recognize(alphanumeric),
+		tag(r#"""#),
+		tag("-"),
+		tag("."),
+		tag("_"),
+		tag("%21"),
+		tag("%25"),
+		tag("%26"),
+		tag("%2B"),
+		tag("%2C"),
+		tag("%2F"),
+		tag("%2A"),
+		tag("%28"),
+		tag("%29"),
+		tag("%27"),
+		tag("%3B"),
+		tag("%3A"),
+		tag("%3C"),
+		tag("%3E"),
+		tag("%3D"),
+		tag("%3F"),
 	))(i)
 }
 
@@ -23,12 +45,12 @@ mod tests {
 
 	#[test]
 	fn colon_should_be_xsymbol() {
-		assert_eq!(xchar(":"), Ok(("", ':')));
+		assert_eq!(xchar(":"), Ok(("", ":")));
 	}
 
 	#[test]
 	fn x_should_be_xsymbol() {
-		assert_eq!(xchar("x"), Ok(("", 'x')));
+		assert_eq!(xchar("x"), Ok(("", "x")));
 	}
 
 	#[test]
