@@ -9,12 +9,6 @@ use nom::{
 use super::primitive::{digit, xchar};
 use crate::DataAttributes;
 
-macro_rules! v {
-	($v:ident) => {
-		Some($v.into_owned())
-	};
-}
-
 macro_rules! attr {
 	(match ($attr: ident, $key: expr, $value: expr) {
 		$(

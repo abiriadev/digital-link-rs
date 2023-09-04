@@ -6,5 +6,5 @@ mod primary_key;
 mod primitive;
 mod qualifier;
 
-pub use gs1path::gs1path;
 pub use data_attributes::parse_data_attribute;
+pub use gs1path::gs1path;
