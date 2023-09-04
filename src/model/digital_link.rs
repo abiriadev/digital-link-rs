@@ -4,6 +4,7 @@ use nom::combinator::all_consuming;
 use url::Url;
 
 use super::{data_attributes::DataAttributes, error::Error, gs1path, Gs1Path};
+use crate::parser::parse_data_attribute;
 
 pub struct DigitalLink {
 	gs1_path: Gs1Path,
@@ -15,16 +16,24 @@ impl DigitalLink {
 	pub fn try_from_str(s: &str) -> Result<DigitalLink, Error> {
 		let url = Url::parse(s);
 
-		let Ok(url) = Url::parse(s) else { return Err(Error::UrlParseError(url.unwrap_err())); };
+		let Ok(url) = url else { return Err(Error::UrlParseError(url.unwrap_err())); };
 
 		let res = all_consuming(gs1path)(url.path());
 
 		match res {
-			Ok((_, gs1_path)) => Ok(Self {
-				gs1_path,
-				data_attributes: DataAttributes::default(),
-				base_url: url.host_str().unwrap().to_owned(),
-			}),
+			Ok((_, gs1_path)) => {
+				let mut data_attributes = DataAttributes::default();
+
+				for query_pair in url.query_pairs() {
+					parse_data_attribute(&mut data_attributes, query_pair);
+				}
+
+				Ok(Self {
+					gs1_path,
+					data_attributes,
+					base_url: url.host_str().unwrap().to_owned(),
+				})
+			},
 			Err(err) => Err(Error::Gs1PathParseError(
 				err.map(|e| e.to_string()),
 			)),
