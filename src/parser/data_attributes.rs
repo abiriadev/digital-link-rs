@@ -39,7 +39,7 @@ macro_rules! digit {
 	};
 }
 
-macro_rules! xstp {
+macro_rules! xchar {
 	($n:literal) => {
 		count(xchar, $n)
 	};
@@ -114,7 +114,7 @@ pub fn parse_data_attribute(
 				(logistic_volume, digit!(6)),
 			"7030" | "7031" | "7032" | "7033" | "7034" | "7035" | "7036"
 			| "7037" | "7038" | "7039" => (
-				// processorValue = 3DIGIT 1*27XCHAR
+				// processorvalue = 3digit 1*27xchar
 				processor,
 				count(digit, 3).and(many_m_n(1, 27, xchar)),
 			),
@@ -133,39 +133,39 @@ pub fn parse_data_attribute(
 			"20" => (variant, digit!(2)),
 			"30" => (var_count, digit!(1, 8)),
 			"37" => (count, digit!(1, 8)),
-			"90" => (mutual, xstp!(1, 30)),
-			"240" => (additional_id, xstp!(1, 30)),
-			"241" => (cust_part_no, xstp!(1, 30)),
+			"90" => (mutual, xchar!(1, 30)),
+			"240" => (additional_id, xchar!(1, 30)),
+			"241" => (cust_part_no, xchar!(1, 30)),
 			"242" => (mto_variant, digit!(1, 6)),
-			"243" => (pcn, xstp!(1, 20)),
-			"250" => (secondary_serial, xstp!(1, 30)),
-			"251" => (ref_to_source, xstp!(1, 30)),
+			"243" => (pcn, xchar!(1, 20)),
+			"250" => (secondary_serial, xchar!(1, 30)),
+			"251" => (ref_to_source, xchar!(1, 30)),
 			"3900" | "3901" | "3902" | "3903" | "3904" | "3905" =>
 				(amount, digit!(1, 15)),
 			"3910" | "3911" | "3912" | "3913" | "3914" | "3915" => (
-				// amountISOValue = 3DIGIT 1*15DIGIT
+				// amountisovalue = 3digit 1*15digit
 				amount_iso,
 				count(digit, 3).and(many_m_n(1, 15, digit)),
 			),
 			"3920" | "3921" | "3922" | "3923" | "3924" | "3925" =>
 				(price, digit!(1, 15)),
 			"3930" | "3931" | "3932" | "3933" | "3934" | "3935" => (
-				// priceISOValue = 3DIGIT 1*15DIGIT
+				// priceisovalue = 3digit 1*15digit
 				price_iso,
 				count(digit, 3).and(many_m_n(1, 15, digit)),
 			),
 			"3940" | "3941" | "3942" | "3943" | "3944" | "3945" =>
 				(percent_off, digit!(4)),
-			"400" => (order_number, xstp!(1, 30)),
-			"403" => (route, xstp!(1, 30)),
+			"400" => (order_number, xchar!(1, 30)),
+			"403" => (route, xchar!(1, 30)),
 			"410" => (ship_to_loc, digit!(13)),
 			"411" => (bill_to, digit!(13)),
 			"412" => (purchase_from, digit!(13)),
 			"413" => (ship_for_loc, digit!(13)),
 			"416" => (prod_serv_loc, digit!(13)),
-			"420" => (ship_to_post, xstp!(1, 20)),
+			"420" => (ship_to_post, xchar!(1, 20)),
 			"421" => (
-				// shipToPostISOParameter = 3DIGIT 1*9XCHAR
+				// shiptopostisoparameter = 3digit 1*9xchar
 				ship_to_post_iso,
 				count(digit, 3).and(many_m_n(1, 9, xchar)),
 			),
@@ -173,92 +173,92 @@ pub fn parse_data_attribute(
 			"424" => (country_process, digit!(3)),
 			"426" => (country_full_process, digit!(3)),
 			"423" => (
-				// countryInitialProcessParameter = 3DIGIT 1*12DIGIT
+				// countryinitialprocessparameter = 3digit 1*12digit
 				country_initial_process,
 				count(digit, 3).and(many_m_n(1, 12, digit)),
 			),
 			"425" => (
-				// countryDisassemblyParameter = 3DIGIT 1*12DIGIT
+				// countrydisassemblyparameter = 3digit 1*12digit
 				country_disassembly,
 				count(digit, 3).and(many_m_n(1, 12, digit)),
 			),
-			"427" => (origin_subdivision, xstp!(1, 3)),
-			"710" => (nhrn_pzn, xstp!(1, 20)),
-			"711" => (nhrn_cip, xstp!(1, 20)),
-			"712" => (nhrn_cn, xstp!(1, 20)),
-			"713" => (nhrn_drn, xstp!(1, 20)),
-			"714" => (nhrn_aim, xstp!(1, 20)),
-			"715" => (nhrn_us_fda, xstp!(1, 20)),
+			"427" => (origin_subdivision, xchar!(1, 3)),
+			"710" => (nhrn_pzn, xchar!(1, 20)),
+			"711" => (nhrn_cip, xchar!(1, 20)),
+			"712" => (nhrn_cn, xchar!(1, 20)),
+			"713" => (nhrn_drn, xchar!(1, 20)),
+			"714" => (nhrn_aim, xchar!(1, 20)),
+			"715" => (nhrn_us_fda, xchar!(1, 20)),
 			"7001" => (nsn, digit!(13)),
-			"7002" => (meat_cut, xstp!(1, 30)),
+			"7002" => (meat_cut, xchar!(1, 30)),
 			"7004" => (active_potency, digit!(1, 4)),
-			"7005" => (catch_area, xstp!(1, 12)),
-			"7008" => (aquatic_species, xstp!(1, 3)),
-			"7009" => (fishing_gear_type, xstp!(1, 10)),
-			"7010" => (prod_method, xstp!(1, 2)),
-			"7020" => (refurb_lot, xstp!(1, 20)),
-			"7021" => (func_stat, xstp!(1, 20)),
-			"7022" => (rev_stat, xstp!(1, 20)),
-			"7023" => (giai_assembly, xstp!(1, 30)),
+			"7005" => (catch_area, xchar!(1, 12)),
+			"7008" => (aquatic_species, xchar!(1, 3)),
+			"7009" => (fishing_gear_type, xchar!(1, 10)),
+			"7010" => (prod_method, xchar!(1, 2)),
+			"7020" => (refurb_lot, xchar!(1, 20)),
+			"7021" => (func_stat, xchar!(1, 20)),
+			"7022" => (rev_stat, xchar!(1, 20)),
+			"7023" => (giai_assembly, xchar!(1, 30)),
 			"7230" | "7231" | "7232" | "7233" | "7234" | "7235" | "7236"
 			| "7237" | "7238" | "7239" => (
-				// ertificationRefValue, = 2XCHAR 1*28XCHAR
+				// ertificationrefvalue, = 2xchar 1*28xchar
 				certification_ref,
 				count(xchar, 2).and(many_m_n(1, 28, xchar)),
 			),
 			"8001" => (dimensions, digit!(14)),
-			"8002" => (cmt_no, xstp!(1, 20)),
-			"8007" => (iban, xstp!(1, 34)),
+			"8002" => (cmt_no, xchar!(1, 20)),
+			"8007" => (iban, xchar!(1, 34)),
 			"8008" => (
-				// prodTimeParameter = 8DIGIT [2DIGIT] [2DIGIT]
+				// prodtimeparameter = 8digit [2digit] [2digit]
 				prod_time,
 				count(digit, 8)
 					.and(opt(count(digit, 2)))
 					.and(opt(count(digit, 2))),
 			),
-			"8009" => (optical_sensor, xstp!(1, 50)),
-			"8012" => (version, xstp!(1, 20)),
-			"8020" => (ref_no, xstp!(1, 25)),
+			"8009" => (optical_sensor, xchar!(1, 50)),
+			"8012" => (version, xchar!(1, 20)),
+			"8020" => (ref_no, xchar!(1, 25)),
 			"8026" => (
-				// itipContentParameter = 14DIGIT 2DIGIT 2DIGIT
+				// itipcontentparameter = 14digit 2digit 2digit
 				itip_content,
 				digit!(18),
 			),
-			"8110" => (coupon_idna, xstp!(1, 70)),
+			"8110" => (coupon_idna, xchar!(1, 70)),
 			"8111" => (points, digit!(4)),
-			"8112" => (paperless_coupon_idna, xstp!(1, 70)),
-			"4300" => (ship_to_comp, xstp!(1, 35)),
-			"4301" => (ship_to_name, xstp!(1, 35)),
-			"4302" => (ship_to_add1, xstp!(1, 70)),
-			"4303" => (ship_to_add2, xstp!(1, 70)),
-			"4304" => (ship_to_sub, xstp!(1, 70)),
-			"4305" => (ship_to_locality, xstp!(1, 70)),
-			"4306" => (ship_to_reg, xstp!(1, 70)),
-			"4307" => (ship_to_country, xstp!(2)),
-			"4308" => (ship_to_phone, xstp!(1, 30)),
-			"4310" => (rtn_to_comp, xstp!(1, 35)),
-			"4311" => (rtn_to_name, xstp!(1, 35)),
-			"4312" => (rtn_to_add1, xstp!(1, 70)),
-			"4313" => (rtn_to_add2, xstp!(1, 70)),
-			"4314" => (rtn_to_sub, xstp!(1, 70)),
-			"4315" => (rtn_to_loc, xstp!(1, 70)),
-			"4316" => (rtn_to_reg, xstp!(1, 70)),
-			"4317" => (rtn_to_country, xstp!(2)),
-			"4318" => (rtn_to_post, xstp!(1, 20)),
-			"4319" => (rtn_to_phone, xstp!(1, 30)),
-			"4320" => (srv_description, xstp!(1, 35)),
+			"8112" => (paperless_coupon_idna, xchar!(1, 70)),
+			"4300" => (ship_to_comp, xchar!(1, 35)),
+			"4301" => (ship_to_name, xchar!(1, 35)),
+			"4302" => (ship_to_add1, xchar!(1, 70)),
+			"4303" => (ship_to_add2, xchar!(1, 70)),
+			"4304" => (ship_to_sub, xchar!(1, 70)),
+			"4305" => (ship_to_locality, xchar!(1, 70)),
+			"4306" => (ship_to_reg, xchar!(1, 70)),
+			"4307" => (ship_to_country, xchar!(2)),
+			"4308" => (ship_to_phone, xchar!(1, 30)),
+			"4310" => (rtn_to_comp, xchar!(1, 35)),
+			"4311" => (rtn_to_name, xchar!(1, 35)),
+			"4312" => (rtn_to_add1, xchar!(1, 70)),
+			"4313" => (rtn_to_add2, xchar!(1, 70)),
+			"4314" => (rtn_to_sub, xchar!(1, 70)),
+			"4315" => (rtn_to_loc, xchar!(1, 70)),
+			"4316" => (rtn_to_reg, xchar!(1, 70)),
+			"4317" => (rtn_to_country, xchar!(2)),
+			"4318" => (rtn_to_post, xchar!(1, 20)),
+			"4319" => (rtn_to_phone, xchar!(1, 30)),
+			"4320" => (srv_description, xchar!(1, 35)),
 			"4321" => (
-				// dangerousGoodsParameter = BOOLEAN
+				// dangerousgoodsparameter = boolean
 				dangerous_goods,
 				digit!(6),
 			),
 			"4322" => (
-				// authToLeaveParameter = BOOLEAN
+				// authtoleaveparameter = boolean
 				auth_to_leave,
 				digit!(6),
 			),
 			"4323" => (
-				// sigRequiredParameter = BOOLEAN
+				// sigrequiredparameter = boolean
 				sig_required,
 				digit!(6),
 			),
@@ -267,86 +267,86 @@ pub fn parse_data_attribute(
 			"4326" => (release_date, digit!(6)),
 			"3950" | "3951" | "3952" | "3953" => (amount_pay_per_unit, digit!(6)),
 			"01" => (
-				// gtinParameter = gtin-value
+				// gtinparameter = gtin-value
 				gtin,
 				digit!(6),
 			),
 			"8006" => (
-				// itipParameter = itip-value
+				// itipparameter = itip-value
 				itip,
 				digit!(6),
 			),
 			"8013" => (
-				// gmnParameter = gmn-value
+				// gmnparameter = gmn-value
 				gmn,
 				digit!(6),
 			),
 			"8010" => (
-				// cpidParameter = cpid-value
+				// cpidparameter = cpid-value
 				cpid,
 				digit!(6),
 			),
 			"414" => (
-				// glnParameter = gln-value
+				// glnparameter = gln-value
 				gln,
 				digit!(6),
 			),
 			"415" => (
-				// payToParameter = payTo-value
+				// paytoparameter = payto-value
 				pay_to,
 				digit!(6),
 			),
 			"417" => (
-				// partyGlnParameter = partyGln-value
+				// partyglnparameter = partygln-value
 				party_gln,
 				digit!(6),
 			),
 			"8017" => (
-				// gsrnpParameter = gsrnp-value
+				// gsrnpparameter = gsrnp-value
 				gsrnp,
 				digit!(6),
 			),
 			"8018" => (
-				// gsrnParameter = gsrn-value
+				// gsrnparameter = gsrn-value
 				gsrn,
 				digit!(6),
 			),
 			"255" => (
-				// gcnParameter = gcn-value
+				// gcnparameter = gcn-value
 				gcn,
 				digit!(6),
 			),
 			"00" => (
-				// ssccParameter = sscc-value
+				// ssccparameter = sscc-value
 				sscc,
 				digit!(6),
 			),
 			"253" => (
-				// gdtiParameter = gdti-value
+				// gdtiparameter = gdti-value
 				gdti,
 				digit!(6),
 			),
 			"401" => (
-				// gincParameter = ginc-value
+				// gincparameter = ginc-value
 				ginc,
 				digit!(6),
 			),
 			"402" => (
-				// gsinParameter = gsin-value
+				// gsinparameter = gsin-value
 				gsin,
 				digit!(6),
 			),
 			"8003" => (
-				// graiParameter = grai-value
+				// graiparameter = grai-value
 				grai,
 				digit!(6),
 			),
 			"8004" => (
-				// giaiParameter = giai-value
+				// giaiparameter = giai-value
 				giai,
 				digit!(6),
 			),
-			"96" | "97" | "98" | "99" => (internal, xstp!(1, 90)),
+			"96" | "97" | "98" | "99" => (internal, xchar!(1, 90)),
 		}
 	};
 }
