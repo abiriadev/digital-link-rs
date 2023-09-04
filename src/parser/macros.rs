@@ -1,3 +1,21 @@
+macro_rules! digit {
+	($n:literal) => {
+		count(digit, $n)
+	};
+	($n:literal, $m:literal) => {
+		many_m_n($n, $m, digit)
+	};
+}
+
+macro_rules! xchar {
+	($n:literal) => {
+		count(xchar, $n)
+	};
+	($n:literal, $m:literal) => {
+		many_m_n($n, $m, xchar)
+	};
+}
+
 macro_rules! comp {
 	($name:ident, $code:literal, $value:expr) => {
 		pub fn $name(i: &str) -> nom::IResult<&str, &str> {

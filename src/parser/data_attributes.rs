@@ -11,24 +11,6 @@ use nom::{
 use super::primitive::{digit, xchar};
 use crate::DataAttributes;
 
-macro_rules! digit {
-	($n:literal) => {
-		count(digit, $n)
-	};
-	($n:literal, $m:literal) => {
-		many_m_n($n, $m, digit)
-	};
-}
-
-macro_rules! xchar {
-	($n:literal) => {
-		count(xchar, $n)
-	};
-	($n:literal, $m:literal) => {
-		many_m_n($n, $m, xchar)
-	};
-}
-
 fn bool(inp: &str) -> IResult<&str, &str> { alt((tag("0"), tag("1")))(inp) }
 
 pub fn parse_data_attribute(
