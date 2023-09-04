@@ -57,7 +57,7 @@ macro_rules! attr {
 					}
 				},
 			)*
-			_ => todo!()
+			_ => () // simply ignore
 		}
 	};
 }
