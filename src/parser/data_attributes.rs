@@ -1,17 +1,13 @@
 use std::borrow::{Borrow, Cow};
 
 use nom::{
-	branch::alt,
-	bytes::complete::tag,
 	combinator::opt,
 	multi::{count, many_m_n},
-	IResult, Parser,
+	Parser,
 };
 
-use super::primitive::{digit, xchar};
+use super::primitive::{bool, digit, xchar};
 use crate::DataAttributes;
-
-fn bool(inp: &str) -> IResult<&str, &str> { alt((tag("0"), tag("1")))(inp) }
 
 pub fn parse_data_attribute(
 	data_attributes: &mut DataAttributes,

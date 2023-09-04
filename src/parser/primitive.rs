@@ -3,6 +3,9 @@ use nom::{
 	combinator::recognize, IResult,
 };
 
+#[allow(unused)]
+pub fn bool(inp: &str) -> IResult<&str, &str> { alt((tag("0"), tag("1")))(inp) }
+
 pub fn digit(i: &str) -> IResult<&str, &str> {
 	recognize(one_of("0123456789"))(i)
 }
