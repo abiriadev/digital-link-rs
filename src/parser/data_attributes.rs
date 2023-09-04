@@ -10,7 +10,7 @@ use super::primitive::{digit, xchar};
 use crate::DataAttributes;
 
 macro_rules! attr {
-	(match ($attr: ident, $key: expr, $value: expr) {
+	(match ($attr: ident, $key: expr, $value: expr $(,)?) {
 		$(
 			$code: pat => ($name: ident, $parser: expr $(,)?)
 		),* $(,)?
