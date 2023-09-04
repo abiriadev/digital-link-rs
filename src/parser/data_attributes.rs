@@ -16,19 +16,18 @@ macro_rules! v {
 }
 
 macro_rules! attr {
-	(match ($attr: ident, $key: expr, $value: ident) {
+	(match ($attr: ident, $key: expr, $value: expr) {
 		$(
-			// $name: ident = $code: pat => $parser: expr,
-			$code: pat => ($name: ident, $parser: expr),
-		)*
+			$code: pat => ($name: ident, $parser: expr $(,)?)
+		),* $(,)?
 	}) => {
 		match ($key) {
 			$(
 				$code => {
-					if let Some((_, value)) = $parser
-						.parse($value.borrow())
+					if let Some((_, value)) = all_consuming(recognize($parser))
+						.parse($value)
 						.ok() {
-						$attr.$name = Some(value);
+						$attr.$name = Some(value.to_owned());
 					}
 				},
 			)*
@@ -39,31 +38,19 @@ macro_rules! attr {
 
 macro_rules! stp {
 	($n:literal) => {
-		map_res(
-			all_consuming(recognize(count(digit, $n))),
-			str::parse::<u32>,
-		)
+		count(digit, $n)
 	};
 	($n:literal, $m:literal) => {
-		map_res(
-			all_consuming(recognize(many_m_n(digit, $n, $m))),
-			str::parse::<u32>,
-		)
+		many_m_n($n, $m, digit)
 	};
 }
 
 macro_rules! xstp {
 	($n:literal) => {
-		map_res(
-			all_consuming(recognize(count(xchar, $n))),
-			str::parse::<u32>,
-		)
+		count(xchar, $n)
 	};
 	($n:literal, $m:literal) => {
-		map_res(
-			all_consuming(recognize(many_m_n(xchar, $n, $m))),
-			str::parse::<u32>,
-		)
+		many_m_n($n, $m, xchar)
 	};
 }
 
@@ -72,7 +59,7 @@ pub fn parse_data_attribute(
 	(key, value): (Cow<'_, str>, Cow<'_, str>),
 ) {
 	attr! {
-		match (data_attributes, key.borrow(), value) {
+		match (data_attributes, key.borrow(), value.borrow()) {
 			"3100" | "3101" | "3102" | "3103" | "3104" | "3105" | "3200"
 			| "3201" | "3202" | "3203" | "3204" | "3205" | "3560" | "3561"
 			| "3562" | "3563" | "3564" | "3565" | "3570" | "3571" | "3572"
@@ -88,7 +75,7 @@ pub fn parse_data_attribute(
 			"3130" | "3131" | "3132" | "3133" | "3134" | "3135" | "3270"
 			| "3271" | "3272" | "3273" | "3274" | "3275" | "3280" | "3281"
 			| "3282" | "3283" | "3284" | "3285" | "3290" | "3291" | "3292"
-			| "3293" | "3294" | "3295" => (depth_vmti, 6),
+			| "3293" | "3294" | "3295" => (depth_vmti, stp!(6)),
 			"3140" | "3141" | "3142" | "3143" | "3144" | "3145" | "3500"
 			| "3501" | "3502" | "3503" | "3504" | "3505" | "3510" | "3511"
 			| "3512" | "3513" | "3514" | "3515" | "3520" | "3521" | "3522"
@@ -150,10 +137,10 @@ pub fn parse_data_attribute(
 				harvest_date,
 				map_res(
 					all_consuming(recognize(
-						count(digit, 6).and(opt(count(6, digit))),
+						count(digit, 6).and(opt(count(digit, 6))),
 					)),
 					str::parse::<u32>,
-				),
+				)
 			),
 			"8005" => (price_per_unit, stp!(6)),
 			"20" => (variant, stp!(2)),
@@ -176,7 +163,7 @@ pub fn parse_data_attribute(
 						count(digit, 3).and(many_m_n(1, 15, digit)),
 					)),
 					str::parse::<u32>,
-				),
+				)
 			),
 			"3920" | "3921" | "3922" | "3923" | "3924" | "3925" =>
 				(price, stp!(1, 15)),
@@ -188,7 +175,7 @@ pub fn parse_data_attribute(
 						count(digit, 3).and(many_m_n(1, 15, digit)),
 					)),
 					str::parse::<u32>,
-				),
+				)
 			),
 			"3940" | "3941" | "3942" | "3943" | "3944" | "3945" =>
 				(percent_off, stp!(4)),
@@ -208,7 +195,7 @@ pub fn parse_data_attribute(
 						count(digit, 3).and(many_m_n(1, 9, xchar)),
 					)),
 					str::parse::<u32>,
-				),
+				)
 			),
 			"422" => (origin, stp!(3)),
 			"424" => (country_process, stp!(3)),
@@ -221,7 +208,7 @@ pub fn parse_data_attribute(
 						count(digit, 3).and(many_m_n(1, 12, digit)),
 					)),
 					str::parse::<u32>,
-				),
+				)
 			),
 			"425" => (
 				// countryDisassemblyParameter = 3DIGIT 1*12DIGIT
@@ -231,7 +218,7 @@ pub fn parse_data_attribute(
 						count(digit, 3).and(many_m_n(1, 12, digit)),
 					)),
 					str::parse::<u32>,
-				),
+				)
 			),
 			"427" => (origin_subdivision, xstp!(1, 3)),
 			"710" => (nhrn_pzn, xstp!(1, 20)),
@@ -260,7 +247,7 @@ pub fn parse_data_attribute(
 						count(xchar, 2).and(many_m_n(1, 28, xchar)),
 					)),
 					str::parse::<u32>,
-				),
+				)
 			),
 			"8001" => (dimensions, stp!(14)),
 			"8002" => (cmt_no, xstp!(1, 20)),
@@ -275,7 +262,7 @@ pub fn parse_data_attribute(
 							.and(opt(count(digit, 2))),
 					)),
 					str::parse::<u32>,
-				),
+				)
 			),
 			"8009" => (optical_sensor, xstp!(1, 50)),
 			"8012" => (version, xstp!(1, 20)),
