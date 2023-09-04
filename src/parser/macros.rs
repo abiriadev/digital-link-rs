@@ -12,3 +12,28 @@ macro_rules! comp {
 		}
 	};
 }
+
+macro_rules! attr {
+	(match ($attr: ident, $key: expr, $value: expr $(,)?) {
+		$(
+			$code: pat => ($name: ident, $parser: expr $(,)?)
+		),* $(,)?
+	}) => {
+		match ($key) {
+			$(
+				$code => {
+					if let Some((_, value)) =
+						nom::combinator::all_consuming(
+							nom::combinator::recognize($parser)
+						)
+							.parse($value)
+							.ok()
+					{
+						$attr.$name = Some(value.to_owned());
+					}
+				},
+			)*
+			_ => todo!()
+		}
+	};
+}

@@ -3,34 +3,13 @@ use std::borrow::{Borrow, Cow};
 use nom::{
 	branch::alt,
 	bytes::complete::tag,
-	combinator::{all_consuming, opt, recognize},
+	combinator::opt,
 	multi::{count, many_m_n},
 	IResult, Parser,
 };
 
 use super::primitive::{digit, xchar};
 use crate::DataAttributes;
-
-macro_rules! attr {
-	(match ($attr: ident, $key: expr, $value: expr $(,)?) {
-		$(
-			$code: pat => ($name: ident, $parser: expr $(,)?)
-		),* $(,)?
-	}) => {
-		match ($key) {
-			$(
-				$code => {
-					if let Some((_, value)) = all_consuming(recognize($parser))
-						.parse($value)
-						.ok() {
-						$attr.$name = Some(value.to_owned());
-					}
-				},
-			)*
-			_ => todo!()
-		}
-	};
-}
 
 macro_rules! digit {
 	($n:literal) => {
