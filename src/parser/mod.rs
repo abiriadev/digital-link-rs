@@ -1,5 +1,6 @@
 #[macro_use]
 mod macros;
+mod data_attributes;
 mod gs1path;
 mod primary_key;
 mod primitive;

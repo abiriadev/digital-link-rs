@@ -180,21 +180,21 @@ impl Gs1Path {
 				Self::stringify_ser(ser)
 			),
 			Gs1Path::Cpid { cpsn, .. } =>
-				format!("{}", Self::stringify_cpsn(cpsn)),
+				Self::stringify_cpsn(cpsn),
 			Gs1Path::Gln { glnx, .. } =>
-				format!("{}", Self::stringify_glnx(glnx)),
+				Self::stringify_glnx(glnx),
 			Gs1Path::Gsrnp { srin, .. } =>
-				format!("{}", Self::stringify_srin(srin)),
+				Self::stringify_srin(srin),
 			Gs1Path::Gsrn { srin, .. } =>
-				format!("{}", Self::stringify_srin(srin)),
+				Self::stringify_srin(srin),
 			Gs1Path::Upui { tpx, .. } =>
-				format!("{}", Self::stringify_tpx(tpx)),
+				Self::stringify_tpx(tpx),
 			Gs1Path::Eoid { uic_ext, .. } =>
-				format!("{}", Self::stringify_uic_ext(uic_ext)),
+				Self::stringify_uic_ext(uic_ext),
 			Gs1Path::Fid { uic_ext, .. } =>
-				format!("{}", Self::stringify_uic_ext(uic_ext)),
+				Self::stringify_uic_ext(uic_ext),
 			Gs1Path::Mid { uic_ext, .. } =>
-				format!("{}", Self::stringify_uic_ext(uic_ext)),
+				Self::stringify_uic_ext(uic_ext),
 
 			Gs1Path::Gmn(_)
 			| Gs1Path::PayTo(_)

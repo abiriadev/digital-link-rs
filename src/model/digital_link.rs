@@ -3,7 +3,7 @@ use std::fmt::Display;
 use nom::combinator::all_consuming;
 use url::Url;
 
-use super::{error::Error, gs1path, Gs1Path};
+use super::{data_attributes::DataAttributes, error::Error, gs1path, Gs1Path};
 
 pub struct DigitalLink {
 	gs1_path: Gs1Path,
@@ -12,7 +12,7 @@ pub struct DigitalLink {
 }
 
 impl DigitalLink {
-	pub fn try_from_str(s: &str) -> Result<Self, Error> {
+	pub fn try_from_str(s: &str) -> Result<DigitalLink, Error> {
 		let url = Url::parse(s);
 
 		let Ok(url) = Url::parse(s) else { return Err(Error::UrlParseError(url.unwrap_err())); };
@@ -22,9 +22,7 @@ impl DigitalLink {
 		match res {
 			Ok((_, gs1_path)) => Ok(Self {
 				gs1_path,
-				data_attributes: DataAttributes {
-					net_weight_vmti: None,
-				},
+				data_attributes: DataAttributes::default(),
 				base_url: url.host_str().unwrap().to_owned(),
 			}),
 			Err(err) => Err(Error::Gs1PathParseError(
@@ -34,18 +32,12 @@ impl DigitalLink {
 	}
 }
 
-#[non_exhaustive]
-pub struct DataAttributes {
-	net_weight_vmti: Option<String>,
-}
-
 impl Display for DigitalLink {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		write!(
 			f,
 			"http://{}{}",
-			self.base_url,
-			self.gs1_path.to_string()
+			self.base_url, self.gs1_path
 		)
 	}
 }
