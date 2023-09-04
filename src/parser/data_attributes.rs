@@ -13,6 +13,7 @@ use super::{
 		itip_value, party_gln_value, pay_to_value, sscc_value,
 	},
 	primitive::{bool, digit, xchar},
+	qualifier::lot_value,
 };
 use crate::DataAttributes;
 
@@ -242,6 +243,9 @@ pub fn parse_data_attribute(
 			"8003" => (grai, grai_value),
 			"8004" => (giai, giai_value),
 			"96" | "97" | "98" | "99" => (internal, xchar!(1, 90)),
+			"10" => (lot, lot_value),
+			"17" => (expiry_date, digit!(6)),
+			"7003" => (expiry_time, digit!(10)),
 		}
 	};
 }
