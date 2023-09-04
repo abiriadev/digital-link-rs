@@ -6,6 +6,7 @@ use url::Url;
 use super::{data_attributes::DataAttributes, error::Error, gs1path, Gs1Path};
 use crate::parser::parse_data_attribute;
 
+#[derive(Debug)]
 pub struct DigitalLink {
 	gs1_path: Gs1Path,
 	data_attributes: DataAttributes,

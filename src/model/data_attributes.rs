@@ -1,4 +1,4 @@
-#[derive(Default)]
+#[derive(Default, Debug)]
 #[non_exhaustive]
 pub struct DataAttributes {
 	pub net_weight_vmti: Option<String>,
