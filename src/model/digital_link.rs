@@ -8,9 +8,9 @@ use crate::parser::parse_data_attribute;
 
 #[derive(Debug)]
 pub struct DigitalLink {
-	gs1_path: Gs1Path,
-	data_attributes: DataAttributes,
-	base_url: String,
+	pub gs1_path: Gs1Path,
+	pub data_attributes: DataAttributes,
+	pub base_url: String,
 }
 
 impl DigitalLink {
