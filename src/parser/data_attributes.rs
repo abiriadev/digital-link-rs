@@ -1,9 +1,11 @@
 use std::borrow::{Borrow, Cow};
 
 use nom::{
+	branch::alt,
+	bytes::complete::tag,
 	combinator::{all_consuming, opt, recognize},
 	multi::{count, many_m_n},
-	Parser,
+	IResult, Parser,
 };
 
 use super::primitive::{digit, xchar};
@@ -47,6 +49,8 @@ macro_rules! xchar {
 		many_m_n($n, $m, xchar)
 	};
 }
+
+fn bool(inp: &str) -> IResult<&str, &str> { alt((tag("0"), tag("1")))(inp) }
 
 pub fn parse_data_attribute(
 	data_attributes: &mut DataAttributes,
@@ -228,21 +232,9 @@ pub fn parse_data_attribute(
 			"4318" => (rtn_to_post, xchar!(1, 20)),
 			"4319" => (rtn_to_phone, xchar!(1, 30)),
 			"4320" => (srv_description, xchar!(1, 35)),
-			"4321" => (
-				// dangerousgoodsparameter = boolean
-				dangerous_goods,
-				digit!(6),
-			),
-			"4322" => (
-				// authtoleaveparameter = boolean
-				auth_to_leave,
-				digit!(6),
-			),
-			"4323" => (
-				// sigrequiredparameter = boolean
-				sig_required,
-				digit!(6),
-			),
+			"4321" => (dangerous_goods, bool),
+			"4322" => (auth_to_leave, bool),
+			"4323" => (sig_required, bool),
 			"4324" => (not_before_del_date, digit!(10)),
 			"4325" => (not_after_del_date, digit!(10)),
 			"4326" => (release_date, digit!(6)),
