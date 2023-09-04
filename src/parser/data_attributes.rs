@@ -6,7 +6,14 @@ use nom::{
 	Parser,
 };
 
-use super::primitive::{bool, digit, xchar};
+use super::{
+	primary_key::{
+		cpid_value, gcn_value, gdti_value, giai_value, ginc_value, gln_value,
+		gmn_value, grai_value, gsin_value, gsrn_value, gsrnp_value, gtin_value,
+		itip_value, party_gln_value, pay_to_value, sscc_value,
+	},
+	primitive::{bool, digit, xchar},
+};
 use crate::DataAttributes;
 
 pub fn parse_data_attribute(
@@ -196,86 +203,22 @@ pub fn parse_data_attribute(
 			"4325" => (not_after_del_date, digit!(10)),
 			"4326" => (release_date, digit!(6)),
 			"3950" | "3951" | "3952" | "3953" => (amount_pay_per_unit, digit!(6)),
-			"01" => (
-				// gtinparameter = gtin-value
-				gtin,
-				digit!(6),
-			),
-			"8006" => (
-				// itipparameter = itip-value
-				itip,
-				digit!(6),
-			),
-			"8013" => (
-				// gmnparameter = gmn-value
-				gmn,
-				digit!(6),
-			),
-			"8010" => (
-				// cpidparameter = cpid-value
-				cpid,
-				digit!(6),
-			),
-			"414" => (
-				// glnparameter = gln-value
-				gln,
-				digit!(6),
-			),
-			"415" => (
-				// paytoparameter = payto-value
-				pay_to,
-				digit!(6),
-			),
-			"417" => (
-				// partyglnparameter = partygln-value
-				party_gln,
-				digit!(6),
-			),
-			"8017" => (
-				// gsrnpparameter = gsrnp-value
-				gsrnp,
-				digit!(6),
-			),
-			"8018" => (
-				// gsrnparameter = gsrn-value
-				gsrn,
-				digit!(6),
-			),
-			"255" => (
-				// gcnparameter = gcn-value
-				gcn,
-				digit!(6),
-			),
-			"00" => (
-				// ssccparameter = sscc-value
-				sscc,
-				digit!(6),
-			),
-			"253" => (
-				// gdtiparameter = gdti-value
-				gdti,
-				digit!(6),
-			),
-			"401" => (
-				// gincparameter = ginc-value
-				ginc,
-				digit!(6),
-			),
-			"402" => (
-				// gsinparameter = gsin-value
-				gsin,
-				digit!(6),
-			),
-			"8003" => (
-				// graiparameter = grai-value
-				grai,
-				digit!(6),
-			),
-			"8004" => (
-				// giaiparameter = giai-value
-				giai,
-				digit!(6),
-			),
+			"01" => (gtin, gtin_value),
+			"8006" => (itip, itip_value),
+			"8013" => (gmn, gmn_value),
+			"8010" => (cpid, cpid_value),
+			"414" => (gln, gln_value),
+			"415" => (pay_to, pay_to_value),
+			"417" => (party_gln, party_gln_value),
+			"8017" => (gsrnp, gsrnp_value),
+			"8018" => (gsrn, gsrn_value),
+			"255" => (gcn, gcn_value),
+			"00" => (sscc, sscc_value),
+			"253" => (gdti, gdti_value),
+			"401" => (ginc, ginc_value),
+			"402" => (gsin, gsin_value),
+			"8003" => (grai, grai_value),
+			"8004" => (giai, giai_value),
 			"96" | "97" | "98" | "99" => (internal, xchar!(1, 90)),
 		}
 	};
