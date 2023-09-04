@@ -113,11 +113,7 @@ pub fn parse_data_attribute(
 			| "3685" | "3690" | "3691" | "3692" | "3693" | "3694" | "3695" =>
 				(logistic_volume, digit!(6)),
 			"7030" | "7031" | "7032" | "7033" | "7034" | "7035" | "7036"
-			| "7037" | "7038" | "7039" => (
-				// processorvalue = 3digit 1*27xchar
-				processor,
-				count(digit, 3).and(many_m_n(1, 27, xchar)),
-			),
+			| "7037" | "7038" | "7039" => (processor, digit!(3).and(xchar!(1, 27))),
 			"02" => (content, digit!(14)),
 			"11" => (prod_date, digit!(6)),
 			"12" => (due_date, digit!(6)),
@@ -127,7 +123,7 @@ pub fn parse_data_attribute(
 			"7006" => (first_freeze_date, digit!(6)),
 			"7007" => (
 				harvest_date,
-				count(digit, 6).and(opt(count(digit, 6))),
+				digit!(6).and(opt(digit!(6))),
 			),
 			"8005" => (price_per_unit, digit!(6)),
 			"20" => (variant, digit!(2)),
@@ -142,18 +138,12 @@ pub fn parse_data_attribute(
 			"251" => (ref_to_source, xchar!(1, 30)),
 			"3900" | "3901" | "3902" | "3903" | "3904" | "3905" =>
 				(amount, digit!(1, 15)),
-			"3910" | "3911" | "3912" | "3913" | "3914" | "3915" => (
-				// amountisovalue = 3digit 1*15digit
-				amount_iso,
-				count(digit, 3).and(many_m_n(1, 15, digit)),
-			),
+			"3910" | "3911" | "3912" | "3913" | "3914" | "3915" =>
+				(amount_iso, digit!(3).and(digit!(1, 15))),
 			"3920" | "3921" | "3922" | "3923" | "3924" | "3925" =>
 				(price, digit!(1, 15)),
-			"3930" | "3931" | "3932" | "3933" | "3934" | "3935" => (
-				// priceisovalue = 3digit 1*15digit
-				price_iso,
-				count(digit, 3).and(many_m_n(1, 15, digit)),
-			),
+			"3930" | "3931" | "3932" | "3933" | "3934" | "3935" =>
+				(price_iso, digit!(3).and(digit!(1, 15))),
 			"3940" | "3941" | "3942" | "3943" | "3944" | "3945" =>
 				(percent_off, digit!(4)),
 			"400" => (order_number, xchar!(1, 30)),
@@ -165,22 +155,19 @@ pub fn parse_data_attribute(
 			"416" => (prod_serv_loc, digit!(13)),
 			"420" => (ship_to_post, xchar!(1, 20)),
 			"421" => (
-				// shiptopostisoparameter = 3digit 1*9xchar
 				ship_to_post_iso,
-				count(digit, 3).and(many_m_n(1, 9, xchar)),
+				digit!(3).and(xchar!(1, 9)),
 			),
 			"422" => (origin, digit!(3)),
 			"424" => (country_process, digit!(3)),
 			"426" => (country_full_process, digit!(3)),
 			"423" => (
-				// countryinitialprocessparameter = 3digit 1*12digit
 				country_initial_process,
-				count(digit, 3).and(many_m_n(1, 12, digit)),
+				digit!(3).and(digit!(1, 12)),
 			),
 			"425" => (
-				// countrydisassemblyparameter = 3digit 1*12digit
 				country_disassembly,
-				count(digit, 3).and(many_m_n(1, 12, digit)),
+				digit!(3).and(digit!(1, 12)),
 			),
 			"427" => (origin_subdivision, xchar!(1, 3)),
 			"710" => (nhrn_pzn, xchar!(1, 20)),
@@ -202,28 +189,22 @@ pub fn parse_data_attribute(
 			"7023" => (giai_assembly, xchar!(1, 30)),
 			"7230" | "7231" | "7232" | "7233" | "7234" | "7235" | "7236"
 			| "7237" | "7238" | "7239" => (
-				// ertificationrefvalue, = 2xchar 1*28xchar
 				certification_ref,
-				count(xchar, 2).and(many_m_n(1, 28, xchar)),
+				xchar!(2).and(xchar!(1, 28)),
 			),
 			"8001" => (dimensions, digit!(14)),
 			"8002" => (cmt_no, xchar!(1, 20)),
 			"8007" => (iban, xchar!(1, 34)),
 			"8008" => (
-				// prodtimeparameter = 8digit [2digit] [2digit]
 				prod_time,
-				count(digit, 8)
-					.and(opt(count(digit, 2)))
-					.and(opt(count(digit, 2))),
+				digit!(8)
+					.and(opt(digit!(2)))
+					.and(opt(digit!(2))),
 			),
 			"8009" => (optical_sensor, xchar!(1, 50)),
 			"8012" => (version, xchar!(1, 20)),
 			"8020" => (ref_no, xchar!(1, 25)),
-			"8026" => (
-				// itipcontentparameter = 14digit 2digit 2digit
-				itip_content,
-				digit!(18),
-			),
+			"8026" => (itip_content, digit!(18)),
 			"8110" => (coupon_idna, xchar!(1, 70)),
 			"8111" => (points, digit!(4)),
 			"8112" => (paperless_coupon_idna, xchar!(1, 70)),
