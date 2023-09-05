@@ -2,7 +2,7 @@ use wasm_bindgen::prelude::wasm_bindgen;
 
 #[derive(Default, Debug, Clone)]
 #[non_exhaustive]
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 pub struct DataAttributes {
 	pub net_weight_vmti: Option<String>,
 	pub length_vmti: Option<String>,

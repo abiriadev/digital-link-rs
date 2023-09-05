@@ -57,7 +57,7 @@ impl Gs1PathKey {
 }
 
 #[derive(Debug, Clone, Default)]
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 pub struct Gs1PathWasm {
 	pub gtin: Option<Gtin>,
 	pub itip: Option<Itip>,
@@ -144,7 +144,7 @@ impl From<Gs1Path> for Gs1PathWasm {
 }
 
 #[derive(Debug, Clone)]
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 pub struct Gtin {
 	pub gtin: String,
 	pub cpv: Option<String>,
@@ -152,7 +152,7 @@ pub struct Gtin {
 	pub ser: Option<String>,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Itip {
 	pub itip: String,
@@ -161,116 +161,116 @@ pub struct Itip {
 	pub ser: Option<String>,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Gmn {
 	pub gmn: String,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Cpid {
 	pub cpid: String,
 	pub cpsn: Option<String>,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Gln {
 	pub gln: String,
 	pub glnx: Option<String>,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct PayTo {
 	pub pay_to: String,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct PartyGln {
 	pub party_gln: String,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Gsrnp {
 	pub gsrnp: String,
 	pub srin: Option<String>,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Gsrn {
 	pub gsrn: String,
 	pub srin: Option<String>,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Gcn {
 	pub gcn: String,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Sscc {
 	pub sscc: String,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Gdti {
 	pub gdti: String,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Ginc {
 	pub ginc: String,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Gsin {
 	pub gsin: String,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Grai {
 	pub grai: String,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Giai {
 	pub giai: String,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Upui {
 	pub gtin: String,
 	pub tpx: String,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Eoid {
 	pub party_gln: String,
 	pub uic_ext: String,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Fid {
 	pub gln: String,
 	pub uic_ext: String,
 }
 
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 #[derive(Debug, Clone)]
 pub struct Mid {
 	pub giai: String,

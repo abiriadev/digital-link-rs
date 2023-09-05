@@ -21,7 +21,7 @@ pub struct DigitalLink {
 }
 
 #[derive(Debug)]
-#[wasm_bindgen(getter_with_clone)]
+#[wasm_bindgen(getter_with_clone, inspectable)]
 pub struct DigitalLinkWasm {
 	pub gs1_path_key: Gs1PathKey,
 	pub gs1_path: Gs1PathWasm,
