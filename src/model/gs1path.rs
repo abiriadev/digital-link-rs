@@ -1,5 +1,6 @@
 use std::fmt::{self, Display, Formatter};
 
+/// The type and its value of a Digital Link
 #[non_exhaustive]
 #[derive(Debug)]
 pub enum Gs1Path {

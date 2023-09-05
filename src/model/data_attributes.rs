@@ -1,5 +1,6 @@
 use wasm_bindgen::prelude::wasm_bindgen;
 
+/// Maps of all possible attributes of a Digital Link
 #[derive(Default, Debug, Clone)]
 #[non_exhaustive]
 #[wasm_bindgen(getter_with_clone, inspectable)]

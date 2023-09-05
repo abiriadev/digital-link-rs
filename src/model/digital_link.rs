@@ -13,6 +13,7 @@ use super::{
 };
 use crate::parser::parse_data_attribute;
 
+/// Parsed Digital Link representation
 #[derive(Debug)]
 pub struct DigitalLink {
 	pub gs1_path: Gs1Path,
