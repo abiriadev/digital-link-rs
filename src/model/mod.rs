@@ -8,3 +8,4 @@ mod data_attributes;
 mod digital_link;
 mod error;
 mod gs1path;
+mod wasm;

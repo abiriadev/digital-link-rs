@@ -1,11 +1,7 @@
 use std::fmt::{self, Display, Formatter};
 
-use wasm_bindgen::prelude::wasm_bindgen;
-
-#[wasm_bindgen]
 #[non_exhaustive]
 #[derive(Debug)]
-#[wasm_bindgen]
 pub enum Gs1Path {
 	Gtin {
 		gtin: String,

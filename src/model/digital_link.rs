@@ -2,13 +2,25 @@ use std::fmt::Display;
 
 use nom::combinator::all_consuming;
 use url::Url;
+use wasm_bindgen::prelude::wasm_bindgen;
 
-use super::{data_attributes::DataAttributes, error::Error, gs1path, Gs1Path};
+use super::{
+	data_attributes::DataAttributes, error::Error, gs1path,
+	wasm::gs1path::Gs1PathWasm, Gs1Path,
+};
 use crate::parser::parse_data_attribute;
 
 #[derive(Debug)]
 pub struct DigitalLink {
 	pub gs1_path: Gs1Path,
+	pub data_attributes: DataAttributes,
+	pub base_url: String,
+}
+
+#[derive(Debug)]
+#[wasm_bindgen(getter_with_clone)]
+pub struct DigitalLinkWasm {
+	pub gs1_path: Gs1PathWasm,
 	pub data_attributes: DataAttributes,
 	pub base_url: String,
 }
@@ -48,6 +60,22 @@ impl Display for DigitalLink {
 			f,
 			"http://{}{}",
 			self.base_url, self.gs1_path
+		)
+	}
+}
+
+impl DigitalLinkWasm {
+	pub fn try_from_str(s: &str) -> Result<DigitalLinkWasm, Error> {
+		DigitalLink::try_from_str(s).map(
+			|DigitalLink {
+			     gs1_path,
+			     data_attributes,
+			     base_url,
+			 }| Self {
+				gs1_path: Gs1PathWasm::from(gs1_path),
+				data_attributes,
+				base_url,
+			},
 		)
 	}
 }
