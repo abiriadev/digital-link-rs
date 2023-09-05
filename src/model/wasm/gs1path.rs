@@ -110,7 +110,7 @@ pub struct Itip {
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Gmn(String);
+pub struct Gmn(pub String);
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
@@ -128,11 +128,11 @@ pub struct Gln {
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct PayTo(String);
+pub struct PayTo(pub String);
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct PartyGln(String);
+pub struct PartyGln(pub String);
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
@@ -150,31 +150,31 @@ pub struct Gsrn {
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Gcn(String);
+pub struct Gcn(pub String);
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Sscc(String);
+pub struct Sscc(pub String);
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Gdti(String);
+pub struct Gdti(pub String);
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Ginc(String);
+pub struct Ginc(pub String);
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Gsin(String);
+pub struct Gsin(pub String);
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Grai(String);
+pub struct Grai(pub String);
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Giai(String);
+pub struct Giai(pub String);
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
