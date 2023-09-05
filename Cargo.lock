@@ -38,6 +38,7 @@ version = "0.1.0"
 dependencies = [
  "assert_matches",
  "insta",
+ "js-sys",
  "nom",
  "paste",
  "thiserror",
@@ -82,6 +83,15 @@ dependencies = [
  "serde",
  "similar",
  "yaml-rust",
+]
+
+[[package]]
+name = "js-sys"
+version = "0.3.64"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c5f195fe497f702db0f318b07fdd68edb16955aed830df8363d837542f8f935a"
+dependencies = [
+ "wasm-bindgen",
 ]
 
 [[package]]
