@@ -1,0 +1,12 @@
+{
+	"name": "digital-link-rs",
+	"version": "1.0.0",
+	"description": "rust implementation of gs1 digital link standard",
+	"main": "./pkg/digital_link_rs.js",
+	"scripts": {
+		"build": "./justfile build-wasm"
+	},
+	"keywords": [],
+	"author": "Abiria",
+	"license": "ISC"
+}
