@@ -31,3 +31,6 @@ build-wasm: (build "wasm32-unknown-unknown" "release")
 	wasm-bindgen ./target/wasm32-unknown-unknown/release/{{ crate_name }}.wasm \
 		--out-dir {{ wasm_dist }} \
 		--target nodejs
+
+expand:
+	cargo expand > expanded.rs
