@@ -5,8 +5,11 @@ use url::Url;
 use wasm_bindgen::prelude::wasm_bindgen;
 
 use super::{
-	data_attributes::DataAttributes, error::Error, gs1path,
-	wasm::gs1path::Gs1PathWasm, Gs1Path,
+	data_attributes::DataAttributes,
+	error::Error,
+	gs1path,
+	wasm::gs1path::{Gs1PathKey, Gs1PathWasm},
+	Gs1Path,
 };
 use crate::parser::parse_data_attribute;
 
@@ -20,6 +23,7 @@ pub struct DigitalLink {
 #[derive(Debug)]
 #[wasm_bindgen(getter_with_clone)]
 pub struct DigitalLinkWasm {
+	pub gs1_path_key: Gs1PathKey,
 	pub gs1_path: Gs1PathWasm,
 	pub data_attributes: DataAttributes,
 	pub base_url: String,
@@ -73,6 +77,7 @@ impl DigitalLinkWasm {
 			     data_attributes,
 			     base_url,
 			 }| Self {
+				gs1_path_key: Gs1PathKey::from_ref(&gs1_path),
 				gs1_path: Gs1PathWasm::from(gs1_path),
 				data_attributes,
 				base_url,

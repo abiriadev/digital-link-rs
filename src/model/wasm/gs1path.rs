@@ -4,6 +4,58 @@ use wasm_bindgen::prelude::wasm_bindgen;
 
 use crate::Gs1Path;
 
+#[derive(Debug, Clone, Copy)]
+#[wasm_bindgen]
+pub enum Gs1PathKey {
+	Gtin,
+	Itip,
+	Gmn,
+	Cpid,
+	Gln,
+	PayTo,
+	PartyGln,
+	Gsrnp,
+	Gsrn,
+	Gcn,
+	Sscc,
+	Gdti,
+	Ginc,
+	Gsin,
+	Grai,
+	Giai,
+	Upui,
+	Eoid,
+	Fid,
+	Mid,
+}
+
+impl Gs1PathKey {
+	pub fn from_ref(value: &Gs1Path) -> Self {
+		match value {
+			Gs1Path::Gtin { .. } => Self::Gtin,
+			Gs1Path::Itip { .. } => Self::Itip,
+			Gs1Path::Gmn(_) => Self::Gmn,
+			Gs1Path::Cpid { .. } => Self::Cpid,
+			Gs1Path::Gln { .. } => Self::Gln,
+			Gs1Path::PayTo(_) => Self::PayTo,
+			Gs1Path::PartyGln(_) => Self::PartyGln,
+			Gs1Path::Gsrnp { .. } => Self::Gsrnp,
+			Gs1Path::Gsrn { .. } => Self::Gsrn,
+			Gs1Path::Gcn(_) => Self::Gcn,
+			Gs1Path::Sscc(_) => Self::Sscc,
+			Gs1Path::Gdti(_) => Self::Gdti,
+			Gs1Path::Ginc(_) => Self::Ginc,
+			Gs1Path::Gsin(_) => Self::Gsin,
+			Gs1Path::Grai(_) => Self::Grai,
+			Gs1Path::Giai(_) => Self::Giai,
+			Gs1Path::Upui { .. } => Self::Upui,
+			Gs1Path::Eoid { .. } => Self::Eoid,
+			Gs1Path::Fid { .. } => Self::Fid,
+			Gs1Path::Mid { .. } => Self::Mid,
+		}
+	}
+}
+
 #[derive(Debug, Clone, Default)]
 #[wasm_bindgen(getter_with_clone)]
 pub struct Gs1PathWasm {
