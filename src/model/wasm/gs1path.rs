@@ -4,29 +4,29 @@ use wasm_bindgen::prelude::wasm_bindgen;
 
 use crate::Gs1Path;
 
-#[derive(Debug, Clone, Copy)]
 #[wasm_bindgen]
+#[derive(Debug, Clone, Copy)]
 pub enum Gs1PathKey {
-	Gtin,
-	Itip,
-	Gmn,
-	Cpid,
-	Gln,
-	PayTo,
-	PartyGln,
-	Gsrnp,
-	Gsrn,
-	Gcn,
-	Sscc,
-	Gdti,
-	Ginc,
-	Gsin,
-	Grai,
-	Giai,
-	Upui,
-	Eoid,
-	Fid,
-	Mid,
+	Gtin = "gtin",
+	Itip = "itip",
+	Gmn = "gmn",
+	Cpid = "cpid",
+	Gln = "gln",
+	PayTo = "payTo",
+	PartyGln = "partyGln",
+	Gsrnp = "gsrnp",
+	Gsrn = "gsrn",
+	Gcn = "gcn",
+	Sscc = "sscc",
+	Gdti = "gdti",
+	Ginc = "ginc",
+	Gsin = "gsin",
+	Grai = "grai",
+	Giai = "giai",
+	Upui = "upui",
+	Eoid = "eoid",
+	Fid = "fid",
+	Mid = "mid",
 }
 
 impl Gs1PathKey {
@@ -110,24 +110,25 @@ impl From<Gs1Path> for Gs1PathWasm {
 					lot,
 					ser,
 				}),
-			Gs1Path::Gmn(v) => gs1path_w.gmn = Some(Gmn(v)),
+			Gs1Path::Gmn(gmn) => gs1path_w.gmn = Some(Gmn { gmn }),
 			Gs1Path::Cpid { cpid, cpsn } =>
 				gs1path_w.cpid = Some(Cpid { cpid, cpsn }),
 			Gs1Path::Gln { gln, glnx } =>
 				gs1path_w.gln = Some(Gln { gln, glnx }),
-			Gs1Path::PayTo(v) => gs1path_w.pay_to = Some(PayTo(v)),
-			Gs1Path::PartyGln(v) => gs1path_w.party_gln = Some(PartyGln(v)),
+			Gs1Path::PayTo(pay_to) => gs1path_w.pay_to = Some(PayTo { pay_to }),
+			Gs1Path::PartyGln(party_gln) =>
+				gs1path_w.party_gln = Some(PartyGln { party_gln }),
 			Gs1Path::Gsrnp { gsrnp, srin } =>
 				gs1path_w.gsrnp = Some(Gsrnp { gsrnp, srin }),
 			Gs1Path::Gsrn { gsrn, srin } =>
 				gs1path_w.gsrn = Some(Gsrn { gsrn, srin }),
-			Gs1Path::Gcn(v) => gs1path_w.gcn = Some(Gcn(v)),
-			Gs1Path::Sscc(v) => gs1path_w.sscc = Some(Sscc(v)),
-			Gs1Path::Gdti(v) => gs1path_w.gdti = Some(Gdti(v)),
-			Gs1Path::Ginc(v) => gs1path_w.ginc = Some(Ginc(v)),
-			Gs1Path::Gsin(v) => gs1path_w.gsin = Some(Gsin(v)),
-			Gs1Path::Grai(v) => gs1path_w.grai = Some(Grai(v)),
-			Gs1Path::Giai(v) => gs1path_w.giai = Some(Giai(v)),
+			Gs1Path::Gcn(gcn) => gs1path_w.gcn = Some(Gcn { gcn }),
+			Gs1Path::Sscc(sscc) => gs1path_w.sscc = Some(Sscc { sscc }),
+			Gs1Path::Gdti(gdti) => gs1path_w.gdti = Some(Gdti { gdti }),
+			Gs1Path::Ginc(ginc) => gs1path_w.ginc = Some(Ginc { ginc }),
+			Gs1Path::Gsin(gsin) => gs1path_w.gsin = Some(Gsin { gsin }),
+			Gs1Path::Grai(grai) => gs1path_w.grai = Some(Grai { grai }),
+			Gs1Path::Giai(giai) => gs1path_w.giai = Some(Giai { giai }),
 			Gs1Path::Upui { gtin, tpx } =>
 				gs1path_w.upui = Some(Upui { gtin, tpx }),
 			Gs1Path::Eoid { party_gln, uic_ext } =>
@@ -162,7 +163,9 @@ pub struct Itip {
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Gmn(pub String);
+pub struct Gmn {
+	pub gmn: String,
+}
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
@@ -180,11 +183,15 @@ pub struct Gln {
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct PayTo(pub String);
+pub struct PayTo {
+	pub pay_to: String,
+}
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct PartyGln(pub String);
+pub struct PartyGln {
+	pub party_gln: String,
+}
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
@@ -202,31 +209,45 @@ pub struct Gsrn {
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Gcn(pub String);
+pub struct Gcn {
+	pub gcn: String,
+}
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Sscc(pub String);
+pub struct Sscc {
+	pub sscc: String,
+}
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Gdti(pub String);
+pub struct Gdti {
+	pub gdti: String,
+}
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Ginc(pub String);
+pub struct Ginc {
+	pub ginc: String,
+}
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Gsin(pub String);
+pub struct Gsin {
+	pub gsin: String,
+}
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Grai(pub String);
+pub struct Grai {
+	pub grai: String,
+}
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
-pub struct Giai(pub String);
+pub struct Giai {
+	pub giai: String,
+}
 
 #[wasm_bindgen(getter_with_clone)]
 #[derive(Debug, Clone)]
