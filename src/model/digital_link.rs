@@ -64,9 +64,10 @@ impl Display for DigitalLink {
 	}
 }
 
+#[wasm_bindgen]
 impl DigitalLinkWasm {
-	pub fn try_from_str(s: &str) -> Result<DigitalLinkWasm, Error> {
-		DigitalLink::try_from_str(s).map(
+	pub fn try_from_str(s: &str) -> Option<DigitalLinkWasm> {
+		DigitalLink::try_from_str(s).ok().map(
 			|DigitalLink {
 			     gs1_path,
 			     data_attributes,
