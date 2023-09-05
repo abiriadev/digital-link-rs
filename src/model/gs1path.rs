@@ -1,7 +1,11 @@
 use std::fmt::{self, Display, Formatter};
 
+use wasm_bindgen::prelude::wasm_bindgen;
+
+#[wasm_bindgen]
 #[non_exhaustive]
 #[derive(Debug)]
+#[wasm_bindgen]
 pub enum Gs1Path {
 	Gtin {
 		gtin: String,
@@ -179,22 +183,14 @@ impl Gs1Path {
 				Self::stringify_lot(lot),
 				Self::stringify_ser(ser)
 			),
-			Gs1Path::Cpid { cpsn, .. } =>
-				Self::stringify_cpsn(cpsn),
-			Gs1Path::Gln { glnx, .. } =>
-				Self::stringify_glnx(glnx),
-			Gs1Path::Gsrnp { srin, .. } =>
-				Self::stringify_srin(srin),
-			Gs1Path::Gsrn { srin, .. } =>
-				Self::stringify_srin(srin),
-			Gs1Path::Upui { tpx, .. } =>
-				Self::stringify_tpx(tpx),
-			Gs1Path::Eoid { uic_ext, .. } =>
-				Self::stringify_uic_ext(uic_ext),
-			Gs1Path::Fid { uic_ext, .. } =>
-				Self::stringify_uic_ext(uic_ext),
-			Gs1Path::Mid { uic_ext, .. } =>
-				Self::stringify_uic_ext(uic_ext),
+			Gs1Path::Cpid { cpsn, .. } => Self::stringify_cpsn(cpsn),
+			Gs1Path::Gln { glnx, .. } => Self::stringify_glnx(glnx),
+			Gs1Path::Gsrnp { srin, .. } => Self::stringify_srin(srin),
+			Gs1Path::Gsrn { srin, .. } => Self::stringify_srin(srin),
+			Gs1Path::Upui { tpx, .. } => Self::stringify_tpx(tpx),
+			Gs1Path::Eoid { uic_ext, .. } => Self::stringify_uic_ext(uic_ext),
+			Gs1Path::Fid { uic_ext, .. } => Self::stringify_uic_ext(uic_ext),
+			Gs1Path::Mid { uic_ext, .. } => Self::stringify_uic_ext(uic_ext),
 
 			Gs1Path::Gmn(_)
 			| Gs1Path::PayTo(_)
